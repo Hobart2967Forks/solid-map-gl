@@ -1,0 +1,92 @@
+import length from "@turf/length";
+import area from "@turf/area";
+import midpoint from "@turf/midpoint";
+import { centerOfMass } from "@turf/center-of-mass";
+
+export const getCoords = (coords) => {
+  return (
+    new Intl.NumberFormat(undefined, {
+      maximumFractionDigits: 5,
+    }).format(coords[0]) +
+    "° " +
+    new Intl.NumberFormat(undefined, {
+      maximumFractionDigits: 5,
+    }).format(coords[1]) +
+    "°"
+  );
+};
+
+export const getLength = (coordinates, meta?) => {
+  // length calculation in kilometers or miles
+  const lengthValue = length(
+    {
+      type: "Feature",
+      properties: {},
+      geometry: {
+        type: "LineString",
+        coordinates,
+      },
+    },
+    {
+      units: window.navigator.language === "en-US" ? "miles" : "kilometers",
+    },
+  );
+
+  const label =
+    window.navigator.language === "en-US"
+      ? new Intl.NumberFormat(undefined, {
+          style: "unit",
+          maximumFractionDigits: 2,
+          unit: lengthValue <= 1 ? "foot" : "mile",
+        }).format(lengthValue <= 1 ? lengthValue * 5280 : lengthValue)
+      : new Intl.NumberFormat(undefined, {
+          style: "unit",
+          maximumFractionDigits: 2,
+          unit: lengthValue <= 1 ? "meter" : "kilometer",
+        }).format(lengthValue <= 1 ? lengthValue * 1000 : lengthValue);
+
+  return {
+    label,
+    pos: midpoint(coordinates[0], coordinates[1]).geometry.coordinates,
+  };
+};
+
+export const getArea = (coordinates, meta?) => {
+  // area calculation in square meters
+  const areaValue = area({
+    type: "Feature",
+    properties: {},
+    geometry: {
+      type: "Polygon",
+      coordinates,
+    },
+  });
+
+  const areaLabel =
+    window.navigator.language === "en-US"
+      ? new Intl.NumberFormat(undefined, {
+          style: "unit",
+          maximumFractionDigits: 2,
+          unit: areaValue <= 10.764 ? "foot" : "mile",
+        }).format(
+          areaValue <= 10.764 ? areaValue * 10.764 : areaValue * 1.0000003861,
+        ) + "²"
+      : new Intl.NumberFormat(undefined, {
+          style: "unit",
+          maximumFractionDigits: 2,
+          unit: areaValue <= 1000000 ? "meter" : "kilometer",
+        }).format(areaValue <= 1000000 ? areaValue : areaValue / 1000000) + "²";
+
+  return {
+    type: "Feature",
+    properties: {
+      meta: "measureLabel",
+      value: areaLabel,
+      ...meta,
+    },
+    geometry: centerOfMass({
+      type: "Polygon",
+      coordinates,
+    }).geometry,
+  };
+};
