@@ -54,9 +54,9 @@ export const Marker: Component<Props> = (props: Props) => {
       closeOnClick: false,
       focusAfterOpen: false,
       ...create_popup.popup,
-    })
-      .on('open', () => create_popup.onOpen?.())
-      .on('close', () => create_popup.onClose?.())
+    });
+    popup.on?.('open', () => create_popup.onOpen?.())
+    popup.on?.('close', () => create_popup.onClose?.())
 
     // Update Popup Content
     createEffect(() => {
@@ -77,13 +77,13 @@ export const Marker: Component<Props> = (props: Props) => {
   createEffect(() => {
     if (!ctx.map) return
     marker?.remove()
-    marker = new window.MapLib.Marker(create_marker.options)
-      .on('dragstart', () => create_marker.onDragStart?.())
-      .on('dragend', () => create_marker.onDragEnd?.())
-      .on('drag', () => create_marker.onDrag?.(marker?.getLngLat().toArray()))
-      .setPopup(popup)
-      .setLngLat(LNGLAT)
-      .addTo(ctx.map)
+    marker = new window.MapLib.Marker(create_marker.options);
+    marker.on?.('dragstart', () => create_marker.onDragStart?.())
+    marker.on?.('dragend', () => create_marker.onDragEnd?.())
+    marker.on?.('drag', () => create_marker.onDrag?.(marker?.getLngLat().toArray()))
+    marker.setPopup(popup)
+    marker.setLngLat(LNGLAT)
+    marker.addTo(ctx.map)
 
     // Toggle Popup
     createEffect(
