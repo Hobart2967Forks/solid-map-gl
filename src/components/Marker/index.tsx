@@ -78,13 +78,14 @@ export const Marker: Component<Props> = (props: Props) => {
     if (!ctx.map) return
     marker?.remove()
     marker = new window.MapLib.Marker(create_marker.options);
-    marker.on?.('dragstart', () => create_marker.onDragStart?.())
-    marker.on?.('dragend', () => create_marker.onDragEnd?.())
-    marker.on?.('drag', () => create_marker.onDrag?.(marker?.getLngLat().toArray()))
     marker.setPopup(popup)
     marker.setLngLat(LNGLAT)
     marker.addTo(ctx.map)
-
+    
+    marker.on?.('dragstart', () => create_marker.onDragStart?.())
+    marker.on?.('dragend', () => create_marker.onDragEnd?.())
+    marker.on?.('drag', () => create_marker.onDrag?.(marker?.getLngLat().toArray()))
+    
     // Toggle Popup
     createEffect(
       () => update.showPopup !== popup?.isOpen() && marker?.togglePopup()
