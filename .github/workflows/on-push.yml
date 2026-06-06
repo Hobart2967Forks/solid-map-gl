@@ -26,6 +26,10 @@ jobs:
           key: ${{ runner.os }}-node-modules-${{ hashFiles('yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-node-modules-
+      - name: Tag Package with Hobart2967
+        run: |
+          jq '.name = "@hobart2967"' package.json > package.tmp.json
+          mv package.tmp.json package.json
       - name: Install dependencies
         run: yarn
       - name: Build Project
