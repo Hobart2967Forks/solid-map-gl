@@ -38,4 +38,4 @@ jobs:
         if: github.ref_name == 'release'
         env:
           GITHUB_TOKEN: ${{ github.token }}
-        run: npx semantic-release --dry-run --no-ci
+        run: npx semantic-release
