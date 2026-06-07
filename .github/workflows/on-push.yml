@@ -35,7 +35,7 @@ jobs:
       - name: Build Project
         run: yarn build
       - name: Prepare new version
-        if: github.ref_name == 'master'
+        if: github.ref_name == 'main'
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: npx semantic-release
