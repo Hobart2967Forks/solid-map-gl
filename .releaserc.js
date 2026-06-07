@@ -18,7 +18,7 @@ export default {
         '@semantic-release/release-notes-generator',
         ['@semantic-release/github'],
         ['@semantic-release/npm', {
-                'npmPublish': false
+                'npmPublish': true
             }],
         ['@semantic-release/git', {
         'assets': ['package.json'],
