@@ -7,6 +7,7 @@ coverY: -136.56381942189023
 layout: landing
 ---
 
+
 # Introduction
 
 [SolidJS](https://www.solidjs.com/) Component Library for [Mapbox GL JS](https://github.com/mapbox/mapbox-gl-js) and [MapLibre GL.](https://maplibre.org/projects/maplibre-gl-js/) Both libraries render interactive maps from vector tiles and Map styles using WebGL. This project is intended to be as close as possible to the [Mapbox GL JS API.](https://docs.mapbox.com/mapbox-gl-js/api/)
