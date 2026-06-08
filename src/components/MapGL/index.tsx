@@ -76,6 +76,7 @@ type Props = {
   };
   /** Type for pan, move and zoom transitions */
   transitionType?: "flyTo" | "easeTo" | "jumpTo" | string;
+  onMapLoaded?: (map: Map) => void;
   /** Event listener for Viewport updates */
   onViewportChange?: (viewport: Viewport) => void;
   /** Event listener for User Interaction */
@@ -200,6 +201,7 @@ export const MapGL: Component<Props> = (props) => {
 
     map.once("load", () => {
       setMapLoaded(map);
+      props.onMapLoaded(map);
       debug("Map loaded");
 
       // Handle User Interaction
